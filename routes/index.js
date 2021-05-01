@@ -1,10 +1,10 @@
 var router = require("express").Router();
-var cervezas = require("./cervezas");
+var spots = require("./spots");
 
-router.use("/cervezas", cervezas);
+router.use("/spots", spots);
 
 router.get("/", function (req, res) {
-  res.status(200).json({ message: "Estás conectado a nuestra API de birras" });
+  res.status(200).json({ message: "Estás conectado a nuestra API de spots" });
 });
 
 router.get("/:nombre", function (req, res) {
