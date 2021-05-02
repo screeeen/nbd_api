@@ -2,9 +2,14 @@ var express = require("express"); //llamamos a Express
 var app = express();
 require("dotenv").config();
 var port = process.env.PORT || 8080; // establecemos nuestro puerto
-
+var bodyParser = require("body-parser");
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 var router = require("./routes");
-app.use("/api", router);
 var mongoose = require("mongoose");
 
 var db = process.env.DB;
@@ -21,6 +26,8 @@ mongoose
   .catch((err) => {
     console.error(`Error connecting to the database. \n${err}`);
   });
+
+app.use("/api", router);
 
 //establecemos nuestra primera ruta, mediante get.
 router.get("/", function (req, res) {

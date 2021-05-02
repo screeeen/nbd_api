@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 var spotSchema = new Schema({
   id: { type: Number },
-  name: { type: String },
+  name: { type: String, required: true },
   description: { type: String },
-  location: { type: String },
+  location: { type: String, default: "secret/Unknown", set: capitalize },
   spotType: {
     type: String,
     enum: [
@@ -18,10 +18,19 @@ var spotSchema = new Schema({
       "lowToHigh",
       "drop",
       "wallride",
+      "hubba",
     ],
+    // set: capitalize,
   },
   year: { type: Date },
 });
+
+function capitalize(val) {
+  if (typeof val !== "string") {
+    val = "";
+  }
+  return val.charAt(0).toUpperCase() + val.substring(1);
+}
 
 var Spot = mongoose.model("Spot", spotSchema);
 
