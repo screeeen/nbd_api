@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 var spotSchema = new Schema({
   id: { type: Number },
+  location: { type: String, default: "secret/Unknown", set: capitalize },
   name: { type: String, required: true },
   description: { type: String },
-  location: { type: String, default: "secret/Unknown", set: capitalize },
   spotType: {
     type: String,
     enum: [

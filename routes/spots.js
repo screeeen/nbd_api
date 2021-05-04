@@ -9,12 +9,23 @@ var Spot = require("../model/spots");
 /// --------- routes ----------
 
 router.get("/", function (req, res) {
-  console.log("body:", req.body);
   Spot.find(function (err, spots) {
     if (err) res.send(500, err.message);
     console.log("GET /spots");
     res.status(200).jsonp(spots);
   });
+});
+
+router.get("/search", function (req, res) {
+  var q = req.query.q;
+  console.log("params", q);
+  Spot.find({ $text: { $search: q } })
+    .then((foundSpot) => {
+      res.status(200).jsonp(foundSpot);
+    })
+    .catch((err) => {
+      res.json({ message: "nothing found" });
+    });
 });
 
 router.get("/location/:location", function (req, res) {
@@ -28,6 +39,19 @@ router.get("/location/:location", function (req, res) {
       res.json({ message: "nothing" });
     });
 });
+
+router.get("/spotType/:spotType", function (req, res) {
+  const spotType = req.params;
+  console.log("location search", spotType);
+  Spot.find(spotType)
+    .then((foundSpot) => {
+      res.status(200).json(foundSpot);
+    })
+    .catch((err) => {
+      res.json({ message: "nothing" });
+    });
+});
+
 // ------ post ------
 router.post("/", async (req, res, next) => {
   const { name, description, location, spotType, date } = req.body;
