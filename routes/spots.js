@@ -11,8 +11,9 @@ var Spot = require("../model/spots");
 router.get("/", function (req, res) {
   Spot.find(function (err, spots) {
     if (err) res.send(500, err.message);
-    console.log("GET /spots");
-    res.status(200).jsonp(spots);
+    console.log("GET /spots ....");
+    res.status(200);
+    res.json(spots);
   });
 });
 
