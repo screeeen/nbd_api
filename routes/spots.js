@@ -25,7 +25,19 @@ router.get("/search", function (req, res) {
       res.status(200).jsonp(foundSpot);
     })
     .catch((err) => {
-      res.json({ message: "nothing found" });
+      res.json({ message: err });
+    });
+});
+
+router.get("/name/:name", function (req, res) {
+  const nameSearch = req.params;
+  console.log("name search", nameSearch);
+  Spot.find(nameSearch)
+    .then((foundSpot) => {
+      res.status(200).json(foundSpot);
+    })
+    .catch((err) => {
+      res.json({ message: "name search not found thing" });
     });
 });
 
