@@ -21,10 +21,14 @@ var connectionParams = {
   useCreateIndex: true,
   useUnifiedTopology: true,
 };
+
+// db.collection.createIndex({ name: "text", line: "text" });
+
 mongoose
   .connect(db, connectionParams)
   .then((x) => {
     console.log(`Connected to database ${x.connections[0].name}`);
+    console.log(`Connected to database ${x}`);
   })
   .catch((err) => {
     console.error(`Error connecting to the database. \n${err}`);

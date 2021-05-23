@@ -17,27 +17,34 @@ router.get("/", function (req, res) {
   });
 });
 
-router.get("/search", function (req, res) {
-  var q = req.query.q;
-  console.log("params", q);
-  Spot.find({ $text: { $search: q } })
-    .then((foundSpot) => {
-      res.status(200).jsonp(foundSpot);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
-});
+// router.get("/search", function (req, res) {
+//   var q = req.query.q;
+//   console.log("params", q);
+//   Spot.find({ $text: { $search: q } })
+//     .then((foundSpot) => {
+//       res.status(200).jsonp(foundSpot);
+//     })
+//     .catch((err) => {
+//       res.json({ message: err });
+//     });
+// });
+
+function escapeRegex(text) {
+  return text.toString().replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 router.get("/name/:name", function (req, res) {
   const nameSearch = req.params;
-  console.log("name search", nameSearch);
-  Spot.find(nameSearch)
+  const search = Object.values(nameSearch)[0];
+  // const regex = new RegExp(escapeRegex(nameSearch), "gi");
+  // console.log("regex", regex);
+  console.log("nameSearch", search);
+  Spot.find({ $text: { $search: search } })
     .then((foundSpot) => {
       res.status(200).json(foundSpot);
     })
     .catch((err) => {
-      res.json({ message: "name search not found thing" });
+      res.json({ message: err });
     });
 });
 
