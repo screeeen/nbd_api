@@ -4,17 +4,22 @@ var bodyParser = require("body-parser");
 
 // .find({ $text: { $search: q } }
 
-var Spot = require("../model/spots");
-
+const Spot = require("../model/spots-model");
+const Trick = require("../model/trick-model");
 /// --------- routes ----------
 
 router.get("/", function (req, res) {
-  Spot.find(function (err, spots) {
-    if (err) res.send(500, err.message);
-    console.log("GET /spots ....");
-    res.status(200);
-    res.json(spots);
-  });
+  Spot.find()
+    .populate("tricks")
+    .then((spots) => {
+      // Spot.find(function (err, spots) {
+      console.log("GET /spots ....");
+      res.status(200);
+      res.json(spots);
+    })
+    .catch((error) => {
+      res.status(500).json(err);
+    });
 });
 
 // router.get("/search", function (req, res) {
