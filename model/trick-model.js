@@ -10,9 +10,6 @@ const trickSchema = new Schema({
     required: "URL can't be empty",
     unique: true,
   },
-
-  //   players: [{type: Schema.Types.ObjectId,ref:'Player'}],
-  //   games:[{type: Schema.Types.ObjectId,ref:'Game'}]
 });
 
 trickSchema.path("referenceURL").validate((val) => {

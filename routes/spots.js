@@ -79,18 +79,26 @@ router.get("/spotType/:spotType", function (req, res) {
 
 // ------ post ------
 router.post("/", async (req, res, next) => {
-  const { name, description, location, spotType, date } = req.body;
-  console.log("j", name, description, location, spotType, date);
+  const { name, description, location, spotType, date, trick } = req.body;
+  console.log(
+    "post spot params",
+    name,
+    description,
+    location,
+    spotType,
+    date,
+    trick
+  );
   try {
     const spot = await Spot.findOne({ name }, "name");
-    console.log("ta subio", spot);
+    console.log("ya ta subio", spot);
     if (spot) {
       res.jsonp({ message: "ya ta subio" });
       return;
     } else {
-      await Spot.create({ name, description, location, spotType, date });
+      await Spot.create({ name, description, location, spotType, date, trick });
       // .then((newSpotDoc) => {
-      console.log("created", name);
+      console.log("created", name, trick);
       res.status(201).jsonp({ message: "created" });
       // })
       // .catch((err) => {
@@ -99,7 +107,6 @@ router.post("/", async (req, res, next) => {
       // });
     }
   } catch (error) {
-    // res.jsonp({ message: "parvo" });
     next(error);
   }
 });
