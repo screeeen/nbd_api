@@ -2,11 +2,7 @@ var router = require("express").Router();
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
-// .find({ $text: { $search: q } }
-
 const Spot = require("../model/spots-model");
-const Trick = require("../model/trick-model");
-/// --------- routes ----------
 
 router.get("/", function (req, res) {
   Spot.find()
@@ -22,18 +18,6 @@ router.get("/", function (req, res) {
     });
 });
 
-// router.get("/search", function (req, res) {
-//   var q = req.query.q;
-//   console.log("params", q);
-//   Spot.find({ $text: { $search: q } })
-//     .then((foundSpot) => {
-//       res.status(200).jsonp(foundSpot);
-//     })
-//     .catch((err) => {
-//       res.json({ message: err });
-//     });
-// });
-
 function escapeRegex(text) {
   return text.toString().replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
@@ -41,8 +25,6 @@ function escapeRegex(text) {
 router.get("/name/:name", function (req, res) {
   const nameSearch = req.params;
   const search = Object.values(nameSearch)[0];
-  // const regex = new RegExp(escapeRegex(nameSearch), "gi");
-  // console.log("regex", regex);
   console.log("nameSearch", search);
   Spot.find({ $text: { $search: search } })
     .then((foundSpot) => {
