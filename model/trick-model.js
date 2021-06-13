@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 const trickSchema = new Schema({
   name: String,
   skater: String, //[{ type: Schema.Types.ObjectId, ref: "Skater" }],
-  year: { type: Date },
+  date: { type: Date },
   referenceURL: {
     type: String,
-    required: "URL can't be empty",
-    unique: true,
+    // required: "URL can't be empty",
+    // unique: true,
   },
+  spot_Id: { type: Schema.Types.ObjectId, ref: "Spot" }, // pasar este spot en front, buscar el id al subirlo
 });
 
 trickSchema.path("referenceURL").validate((val) => {

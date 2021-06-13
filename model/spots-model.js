@@ -23,7 +23,8 @@ var spotSchema = new Schema({
     // set: capitalize,
   },
   year: { type: Date },
-  tricks: [{ type: Schema.Types.ObjectId, ref: "Trick" }],
+  tricksRef: [{ type: Schema.Types.ObjectId, ref: "Trick" }],
+  tricks: [{}],
 });
 
 function capitalize(val) {

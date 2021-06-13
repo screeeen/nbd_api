@@ -79,14 +79,8 @@ router.post("/", async (req, res, next) => {
       return;
     } else {
       await Spot.create({ name, description, location, spotType, date, trick });
-      // .then((newSpotDoc) => {
       console.log("created", name, trick);
       res.status(201).jsonp({ message: "created" });
-      // })
-      // .catch((err) => {
-      //   res.jsonp({ message: "un error al subirlo" });
-      //   res.status(500).jsonp(err);
-      // });
     }
   } catch (error) {
     next(error);
